@@ -27,3 +27,9 @@ class RBM(nn.Module):
 data = torch.rand(5210,257)
 model = Net(data.shape[1], 200)
 model(data)
+
+
+learning_rate = 0.01
+for param in model.parameters():
+  weight_update = torch.matmul(data.t(),h) - torch.matmul(x_reconstructed.t(),h_reconstructed)
+  param.data.sub_(weight_update * learning_rate)
