@@ -22,12 +22,12 @@ class Net(nn.Module):
 
         x_reconstructed = torch.matmul(self.feed.weight.t(), h.t())
         
-        h_reconstructed = self.sigmoid(self.feed(x_reconstructed))# h-> x'
+        h_reconstructed = self.sigmoid(self.feed(x_reconstructed.t()))# h-> x'
 
 
 
 
-        return x_reconstructed
+        return x_reconstructed, h , h_reconstructed
 
 data = torch.rand(5210,257)
 model = Net(input = data.shape[1],output = 200)
