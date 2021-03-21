@@ -6,12 +6,12 @@ import torch.nn.init as I
 
 
 
-class Net(nn.Module):
+class RBM(nn.Module):
 
     def __init__(self,
                  input_layer,
                  output_layer):
-        super(Net, self).__init__()
+        super(RBM, self).__init__()
         self.input_layer = input_layer
         self.output_layer = output_layer
         self.sigmoid = torch.nn.Sigmoid()
