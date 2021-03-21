@@ -1,30 +1,26 @@
 import torch
 from torch.autograd import Variable
 import torch.nn as nn
-import torch.nn.functional as F
 import torch.nn.init as I
-
-
-
+from torch.nn import Sigmoid 
 class RBM(nn.Module):
 
     def __init__(self,
-                 input_layer,
-                 output_layer):
+                 visible_size,
+                 hidden_size):
         super(RBM, self).__init__()
-        self.input_layer = input_layer
-        self.output_layer = output_layer
-        self.sigmoid = torch.nn.Sigmoid()
+        self.input_layer = visible_size
+        self.output_layer = hidden_size
         
-        self.feed = nn.Linear(input_layer, output_layer)  
+        self.feed = nn.Linear(visible_size, hidden_size)  
 
 
     def forward(self, x):
-        h = self.sigmoid(self.feed(x))        # x -> h 
+        h = Sigmoid()(self.feed(x))        # x -> h 
 
         x_reconstructed = torch.matmul(h,self.feed.weight)
         
-        h_reconstructed = self.sigmoid(self.feed(x_reconstructed))# h-> x'
+        h_reconstructed = Sigmoid()(self.feed(x_reconstructed))# h-> x'
 
         return h,x_reconstructed,h_reconstructed
 
