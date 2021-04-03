@@ -33,7 +33,7 @@ def Reconstruct(n_components,B,G, Yabs):
 
 def Viz_Y(Y, t, f, vmin=0, vmax=20):
     plt.figure(figsize=(20,7))
-    plt.pcolormesh(t, f, Y,vmin=0, vmax=20, shading='gouraud')
+    plt.pcolormesh(t, f, Y,vmin=vmin, vmax=vmax, shading='gouraud')
     plt.title('STFT Magnitude')
     plt.ylabel('Frequency [Hz]')
     plt.xlabel('Time [sec]')
