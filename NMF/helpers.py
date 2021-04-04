@@ -98,12 +98,13 @@ def SDR(s_est, s):
 def get_mixed_signal(speech, music, SMR_db):
     """
     Function taht takes the speech and music signal alongside the SMR_db
-    returns the mixed signal.
+    returns the mixed signal and the scaled speech
     """
     smr = 10**(SMR_db/10)
     speech_power = torch.tensor(speech,dtype=torch.float64).norm(p=2)
     music_power = torch.tensor(music,dtype=torch.float64).norm(p=2)
     scale = smr * music_power / speech_power
     mixed = scale* speech + music
-    SMR(scale*speech,music)
-    return mixed
+    speech_scaled=scale*speech
+    SMR(speech_scaled,music)
+    return mixed,speech_scaled
