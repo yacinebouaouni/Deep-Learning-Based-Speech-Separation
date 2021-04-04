@@ -1,6 +1,7 @@
 
 import numpy as np
 import matplotlib.pyplot as plt
+import torch
 
 
 def Viz_Y(t,f,Y, vmin=0, vmax=20):
@@ -68,3 +69,41 @@ def Reconstruct_2comp(n_components,B,G, Yabs):
     
     return Sources
 
+
+def SMR(speech, music):
+    
+    """
+    Function that takes music and speech signals.
+    returns SMR in db
+    """
+    speech_power = torch.tensor(speech,dtype=torch.float64).norm(p=2)
+    music_power = torch.tensor(music,dtype=torch.float64).norm(p=2)
+    SMR_db=10*np.log10(speech_power/music_power)
+    print('The SMR = {:.2f}'.format(SMR_db))
+    
+    return SMR_db
+
+def SDR(s_est, s):
+    """
+    Function that takes original and estimated spectrogram
+    returns SDR in DB
+    """
+    
+    signal_power = torch.tensor(s,dtype=torch.float64).norm(p=2)
+    distorsion_power = torch.tensor(s-s_est,dtype=torch.float64).norm(p=2)
+    SDR_db=10*np.log10(signal_power/distorsion_power)
+    
+    return SDR_db
+
+def get_mixed_signal(speech, music, SMR_db):
+    """
+    Function taht takes the speech and music signal alongside the SMR_db
+    returns the mixed signal.
+    """
+    smr = 10**(SMR_db/10)
+    speech_power = torch.tensor(speech,dtype=torch.float64).norm(p=2)
+    music_power = torch.tensor(music,dtype=torch.float64).norm(p=2)
+    scale = smr * music_power / speech_power
+    mixed = scale* speech + music
+    SMR(scale*speech,music)
+    return mixed
