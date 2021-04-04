@@ -104,7 +104,21 @@ def get_mixed_signal(speech, music, SMR_db):
     speech_power = torch.tensor(speech,dtype=torch.float64).norm(p=2)
     music_power = torch.tensor(music,dtype=torch.float64).norm(p=2)
     scale = smr * music_power / speech_power
-    mixed = scale* speech + music
-    speech_scaled=scale*speech
-    SMR(speech_scaled,music)
-    return mixed,speech_scaled
+    
+    if SMR_db ==0:
+        mixed = speech + music
+        return mixed,speech,music
+    
+    if SMR_db < 0 :
+        mixed = scale* speech + music
+        speech_scaled=scale*speech
+        SMR(speech_scaled,music)
+        return mixed,speech_scaled,music
+    
+    if SMR_db >0 :
+        
+        mixed =  speech + music * (1/scale)
+        music_scaled=(1/scale) * music
+        SMR(speech,music_scaled)
+        return mixed,speech,music_scaled
+     
