@@ -76,8 +76,8 @@ def SMR(speech, music):
     Function that takes music and speech signals.
     returns SMR in db
     """
-    speech_power = torch.tensor(speech,dtype=torch.float64).norm(p=2)
-    music_power = torch.tensor(music,dtype=torch.float64).norm(p=2)
+    speech_power = LA.norm(speech,2)
+    music_power = LA.norm(music,2)
     SMR_db=10*np.log10(speech_power/music_power)
     print('The SMR = {:.2f}'.format(SMR_db))
     
