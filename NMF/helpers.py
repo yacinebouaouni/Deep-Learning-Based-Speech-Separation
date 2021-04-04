@@ -2,7 +2,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import torch
-
+from numpy import linalg as LA
 
 def Viz_Y(t,f,Y, vmin=0, vmax=20):
     plt.figure(figsize=(20,7))
@@ -89,8 +89,8 @@ def SDR(s_est, s):
     returns SDR in DB
     """
     
-    signal_power = torch.tensor(s,dtype=torch.float64).norm(p=2)
-    distorsion_power = torch.tensor(s-s_est,dtype=torch.float64).norm(p=2)
+    signal_power = LA.norm(s,2)
+    distorsion_power = LA.norm(s_est,2)
     SDR_db=10*np.log10(signal_power/distorsion_power)
     
     return SDR_db
@@ -101,8 +101,8 @@ def get_mixed_signal(speech, music, SMR_db):
     returns the mixed signal and the scaled speech
     """
     smr = 10**(SMR_db/10)
-    speech_power = torch.tensor(speech,dtype=torch.float64).norm(p=2)
-    music_power = torch.tensor(music,dtype=torch.float64).norm(p=2)
+    speech_power = LA.norm(speech,2)
+    music_power = LA.norm(music,2)
     scale = smr * music_power / speech_power
     mixed = scale* speech + music
     speech_scaled=scale*speech
