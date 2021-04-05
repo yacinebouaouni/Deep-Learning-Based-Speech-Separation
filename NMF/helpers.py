@@ -90,9 +90,8 @@ def SDR(s_est, s):
     """
     
     signal_power = LA.norm(s,2)
-    signal_est_power = LA.norm(s_est,2)
-    
-    SDR_db=10*np.log10(signal_power**2/((signal_est_power-signal_power)**2))
+    distorsion_power = LA.norm(s_est - s,2) 
+    SDR_db=10*np.log10(signal_power/distorsion_power)
     
     return SDR_db
 
