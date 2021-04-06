@@ -105,9 +105,7 @@ def get_mixed_signal(speech, music, SMR_db):
     music_power = LA.norm(music,2)
     scale = smr * music_power / speech_power
     
-    if SMR_db ==0:
-        mixed = speech + music
-        return mixed,speech,music
+
     
     if SMR_db < 0 :
         mixed = scale* speech + music
@@ -115,7 +113,7 @@ def get_mixed_signal(speech, music, SMR_db):
         SMR(speech_scaled,music)
         return mixed,speech_scaled,music
     
-    if SMR_db >0 :
+    if SMR_db >= 0 :
         
         mixed =  speech + music * (1/scale)
         music_scaled=(1/scale) * music
