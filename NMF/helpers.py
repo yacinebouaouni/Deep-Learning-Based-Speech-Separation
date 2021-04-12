@@ -95,6 +95,16 @@ def SDR(s_est, s):
     
     return SDR_db
 
+def plot_SDR(list_smr,list_music,list_speech)
+  plt.figure(figsize=(10,5))
+  sns.set_style("darkgrid")
+
+  ax1 = sns.lineplot(list_smr,list_music)
+  ax2 = sns.lineplot(list_smr,list_speech)
+  ax1.set(xlabel='SMR  (db)', ylabel='SMR  (db)')
+  ax1.legend(["Estimated MUSIC signal","Estimated SPEECH signal"])
+  plt.show()
+  
 def get_mixed_signal(speech, music, SMR_db):
     """
     Function taht takes the speech and music signal alongside the SMR_db
