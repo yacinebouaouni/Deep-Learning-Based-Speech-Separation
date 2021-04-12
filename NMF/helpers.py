@@ -95,7 +95,7 @@ def SDR(s_est, s):
     
     return SDR_db
 
-def plot_SDR(list_smr,list_music,list_speech)
+def plot_SDR(list_smr,list_music,list_speech):
   plt.figure(figsize=(10,5))
   sns.set_style("darkgrid")
 
