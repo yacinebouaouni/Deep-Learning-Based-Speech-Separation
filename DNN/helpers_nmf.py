@@ -179,13 +179,14 @@ def speech_nmf(Y,n_component,max_iter,a,initt):
   model = NMF(n_components=n_component,
             init=initt,
             alpha=a,
-            beta_loss='itakura-saito',
+            beta_loss='frobenius',
             solver="mu",
             max_iter=max_iter,
             random_state=0)
   B = model.fit_transform(Y)
   G = model.components_
-  return B,G, model.reconstruction_err_
+  print(model.reconstruction_err_)
+  return B,G
 def music_nmf(Y,n_component,max_iter,a,initt):
 
 
